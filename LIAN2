@@ -1,0 +1,74 @@
+'''
+https://www.nowcoder.com/question/next?pid=1725829&qid=44802&tid=22464527
+小Q最近遇到了一个难题：把一个字符串的大写字母放到字符串的后面，各个字符的相对位置不变，且不能申请额外的空间。
+你能帮帮小Q吗？
+AkleBiCeilD
+kleieilABCD
+
+'''
+import sys
+
+def str_change(line):
+    line = list(line)
+    #print(line)
+    up_list = []
+    order = 0
+    for i in line:
+        # print(i.isupper())
+        # print(i)
+
+        if i.isupper():
+            up_list.append(i)
+
+            line.remove(i)
+
+    output_lowwer = ''.join(line)
+    output_upper = ''.join(up_list)
+    print(output_lowwer.islower())
+    print(output_lowwer)
+    #print(output_upper.isupper())
+    #print(output_upper)
+    output = ''.join(line) + ''.join(up_list)
+    #output = str(''.join(output))
+    print(output)
+    #print(type(output))
+if __name__ == '__main__':
+    # for line in sys.stdin:
+    #     str_change(line)
+    line = 'AkleBiCeilD'
+    line = 'hxKLAGLLzPyTxsFsrUnnSKQBHdQQrOyaEYJRgiJbHIDXFcQkFmIhPNKIBfHxXDBdKAvgZiBLVwnlxJAHmttsSJkZhSmQneNVoKoIYZRjPqsrFFaaqZbyNyeRjVKVFrCGdfycidTqbyQcpAtdRGzzBAaKoqybWMOyhrCQdwcRwQQpQavTnAbjriVwxJOrTYJVGYSWzKYeNAGqBzkJLucabNYvyVFxAGKLfqHXNttaqZfncEdTroGMzZnDbvZBBaRbJvuYIvlWrKaaGrvtyxrsCUOqxdwCrmVEeDrLKZKFJVRmrLsmbmOGUJyfdZIrFhuSwJQGRTYMLxKQNMaCavatlQIRZmFQvyWgQTVENxUcPKQCaUQbjyfaNuwoNdTBNldgrtPUcQodqsuJOdDpUczJWCZaasDdEYJkvituMHrCmZQSlRjIefVisatIUtfxBeKnHPyvWUKzRliFsYWgeXogiEgXDbfxAybwFuqFyEvjfIHEPDPKqEiGUtZhdDIDBGKpvBFyqHeEEhAToAbqHEpIdIhIGBtWjGHiQRctZxQQYkfFoWUbqZyIcjRPQBilHrnqNBzFmoRUYCSrGkawJCcOrMceegISpIpSGVjbngWVMTYtGoAlQFPFyOFAxndJZNfKDTwFIxisKTjyjchidXpYgLfoBOLriuIAHmAbQwoHBgbdUYBHlDQGZJASsHszOEPthLVnYbNqWegmONexfdsTVYHgtDmlyugefOBsqmgNDBoxkkhVHfvrYooVOyxDJQJLjYSngksbTopoPJFsKQzHePLukXyYTYCeW '
+    # # str_change(line)
+    line_out = 'hxzyxssrnndryagibckmhfxdvgiwnlxmttskhmneoojqsraaqbyyejrdfycidqbycptdzzaoqybyhrdwcwpavnbjriwxrzeqzkucabvyxfqttaqfncdroznbvabvuvlraarvtyxrsqxdwrmermrsmbmyfdrhuwxaavatlmvygxcabjyfauwodldgrtcodqsudpczaasdkviturmljefisattfxenyvzlisgeogigbfxybwuqyvjfqithdpvyqehobqpdhtjictxkfobqycjilrnqzmorkawcrceegppjbngtolyxndfwxisjyjchidpgforiumbwogbdlsszthnbqegmexfdsgtmlyugefsqmgoxkkhfvrooyxjngksboposzeukyeKLAGLLPTFUSKQBHQQOEYJRJHIDXFQFIPNKIBHXDBKAZBLVJAHSJZSQNVKIYZRPFFZNRVKVFCGTQARGBAKWMOCQRQQQTAVJOTYJVGYSWKYNAGBJLNYVFAGKLHXNZETGMZDZBBRJYIWKGCUOCVEDLKZKFJVRLOGUJZIFSJQGRTYMLKQNMCQIRZFQWQTVENUPKQCUQNNTBNPUQJODUJWCZDEYJMHCZQSRIVIUBKHPWUKRFYWXEXDAFFEIHEPDPKEGUZDIDBGKBFHEEATAHEIIIGBWGHQRZQQYFWUZIRPQBHNBFRUYCSGJCOMISISGVWVMTYGAQFPFOFAJZNKDTFIKTXYLBOLIAHAQHBUYBHDQGZJASHOEPLVYNWONTVYHDOBNDBVHYVODJQJLYSTPJFKQHPLXYTYCW'
+    #print(line_out)
+    # s = line
+    # for x in s:
+    #     if x.isupper():
+    #         s = s + x
+    #         print(s)
+    #         print(s[0:s.find(x)])
+    #         print(s[s.find(x) + 1:])
+    #         print('\n')
+    #         s = s[0:s.find(x)] + s[s.find(x) + 1:]
+    #         #重构句子为大写字母之前的部分加上它之后的部分，并且之前就已经把他放在了句子的最后
+    # print(s)
+    #for line in sys.stdin:
+    line = line.strip()
+    for letter in line:
+        if letter.isupper():
+            line = line + letter
+            line = line[0:line.find(letter)] + line[line.find(letter) + 1:]
+    print('line: ', line)
+    print('ANS:  ', line_out)
+
+'''
+通过
+import sys
+if __name__ == "__main__":
+    for line in sys.stdin:
+        line = line.strip()
+        for letter in line:
+            if letter.isupper():
+                line = line + letter
+                line = line[0:line.find(letter)] + line[line.find(letter) + 1:]
+        print(line)
+'''
