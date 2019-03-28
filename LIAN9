@@ -1,0 +1,114 @@
+'''
+https://www.nowcoder.com/test/question/f58859adc39f4edc9cd8e40ba4160339?pid=6910869&tid=22554915
+时间限制：1秒
+
+空间限制：32768K
+
+魔法王国一共有n个城市,编号为0~n-1号,n个城市之间的道路连接起来恰好构成一棵树。
+小易现在在0号城市,每次行动小易会从当前所在的城市走到与其相邻的一个城市,小易最多能行动L次。
+如果小易到达过某个城市就视为小易游历过这个城市了,小易现在要制定好的旅游计划使他能游历最多的城市,请你帮他计算一下他最多能游历过多少个城市(注意0号城市已经游历了,游历过的城市不重复计算)。
+
+输入描述:
+输入包括两行,第一行包括两个正整数n(2 ≤ n ≤ 50)和L(1 ≤ L ≤ 100),表示城市个数和小易能行动的次数。
+第二行包括n-1个整数parent[i](0 ≤ parent[i] ≤ i), 对于每个合法的i(0 ≤ i ≤ n - 2),在(i+1)号城市和parent[i]间有一条道路连接。
+
+输出描述:
+输出一个整数,表示小易最多能游历的城市数量。
+
+输入例子1:
+5 2
+0 1 2 3
+
+输出例子1:
+3
+
+'''
+
+import sys
+import collections
+class Tree:
+    def __init__(self, kids, next=None):
+        self.kids = self.val = kids
+        self.next = next
+def max_city(n, L, routh_list):
+    dict_routh = collections.defaultdict(list)
+    lens = len(routh_list)
+    max_len = 1
+    ind = 1
+    for i in range(len(routh_list)):
+        if i <= n-2:
+            dict_routh[routh_list[i]].append(i+1)
+    print(dict_routh)
+    #print(len(dict_routh))
+    for c1 in dict_routh[0]:
+        while True:
+            if dict_routh[c1] != []:
+                max_len += 1
+                c2 = c1
+                for c1 in dict_routh[c2]:
+                    continue
+            else:
+                break
+    print(max_len + 2)
+
+
+    # while True:
+    #     if dict_routh[0] == []:
+    #         print(0)
+    #         break
+    #     else:
+    #         for ind in range(n):
+    #
+    #         for next in dict_routh[0]:
+    #             if dict_routh[next] != []:
+    #                 max_len += 1
+    #                 the_list = dict_routh[next]
+    #                 for next1 in dict_routh[next]:
+    #                     if dict_routh[next1]!=[]:
+    #                         max_len += 1
+    #                         break
+    #                     for next2 in dict_routh[next1]:
+    #                         max_len += 1
+    #                         for next3 in dict_routh[next2]:
+    #                             max_len += 1
+    #                             for next4 in dict_routh[next3]:
+    #                                 max_len += 1
+    #                                 for next5 in dict_routh[next4]:
+    #                                     max_len += 1
+    #         break
+    # print(max_len)
+n = 5
+L = 2
+routh_list = [0, 1, 2, 3]
+max_city(n, L, routh_list)
+
+
+
+'''
+借鉴：
+链接：https://www.nowcoder.com/questionTerminal/f58859adc39f4edc9cd8e40ba4160339
+来源：牛客网
+
+##来个python版，参考请别叫我河神同学
+import sys
+try:
+    while True:
+            a = sys.stdin.readline().strip().split()
+            n,l= int(a[0]),int(a[1])
+            c = sys.stdin.readline().strip().split()
+            depth = [0]*n
+            maxdepth = -1
+            for i in range(n-1):
+                depth[i + 1] = depth[int(c[i])] + 1         
+                if depth[i + 1] > maxdepth:           
+                    maxdepth = depth[i + 1]  
+            if l < maxdepth:
+                count = l
+            else:
+                count = maxdepth + (l - maxdepth) / 2   
+            count = n -1  if count > n-1 else count 
+            print(count + 1) 
+except:
+    pass
+
+'''
