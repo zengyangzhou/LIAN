@@ -83,24 +83,30 @@ def kill_more(n, x, y):
             k1 = (posi_y[0] - posi_y[1]) / (posi_x[0] - posi_x[1])
             k2 = -1/k1
             for id in ind:
-                if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k1 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
+                if x[id] - posi_x[0] == 0:
                     max_kill += 1
-                if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k2 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
-                    max_kill += 1
-            max_kill += 1
+                else:
+                    if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k1 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
+                        max_kill += 1
+                    if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k2 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
+                        max_kill += 1
+
             if max_kill > max_ki:
                 max_ki = max_kill
 
             max_kill = 0
             for id in ind:
-                if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k1 or (x[id] - posi_x[1] == 0 and y[id] - posi_y[1]):
+                if x[id] - posi_x[1] == 0:
                     max_kill += 1
-                if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k2 or (x[id] - posi_x[1] == 0 and y[id] - posi_y[1]):
-                    max_kill += 1
-            max_kill += 1
+                else:
+                    if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k1:
+                        max_kill += 1
+                    if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k2 or (x[id] - posi_x[1] == 0 and y[id] - posi_y[1]):
+                        max_kill += 1
+
             if max_kill > max_ki:
                 max_ki = max_kill
-    print(ki)
+    print(max_ki)
 
 
 n = 5
