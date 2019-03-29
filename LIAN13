@@ -1,0 +1,109 @@
+'''
+时间限制：1秒
+https://www.nowcoder.com/question/next?pid=6910869&qid=126954&tid=22714072
+空间限制：32768K
+
+小易正在玩一款新出的射击游戏,这个射击游戏在一个二维平面进行,小易在坐标原点(0,0),平面上有n只怪物,每个怪物有所在的坐标(x[i], y[i])。小易进行一次射击会把x轴和y轴上(包含坐标原点)的怪物一次性消灭。
+小易是这个游戏的VIP玩家,他拥有两项特权操作:
+1、让平面内的所有怪物同时向任意同一方向移动任意同一距离
+2、让平面内的所有怪物同时对于小易(0,0)旋转任意同一角度
+小易要进行一次射击。小易在进行射击前,可以使用这两项特权操作任意次。
+小易想知道在他射击的时候最多可以同时消灭多少只怪物,请你帮帮小易。
+
+如样例所示:
+
+所有点对于坐标原点(0,0)顺时针或者逆时针旋转45°,可以让所有点都在坐标轴上,所以5个怪物都可以消灭。
+
+输入描述:
+输入包括三行。
+第一行中有一个正整数n(1 ≤ n ≤ 50),表示平面内的怪物数量。
+第二行包括n个整数x[i](-1,000,000 ≤ x[i] ≤ 1,000,000),表示每只怪物所在坐标的横坐标,以空格分割。
+第二行包括n个整数y[i](-1,000,000 ≤ y[i] ≤ 1,000,000),表示每只怪物所在坐标的纵坐标,以空格分割。
+
+输出描述:
+输出一个整数表示小易最多能消灭多少只怪物。
+
+输入例子1:
+5
+0 -1 1 1 -1
+0 -1 -1 1 1
+
+输出例子1:
+5
+
+
+'''
+
+import sys
+from itertools import combinations, permutations
+def kill_more(n, x, y):
+    ind = []
+    posi_x = []
+    posi_y = []
+    max_ki = 0
+    org = [0, 0]
+    for index, val in enumerate(x):
+        ind.append(index)
+    comb = list(combinations(ind, 2))
+    for com in comb:
+        for po in com:
+            posi_x.append(x[po])
+            posi_y.append(y[po])
+        if posi_y[0] == posi_y[1]: #两个点形成的直线与x轴平行, 生成y=posi_y[0] 的直线
+            max_kill = 0
+            for x_pos in posi_x:
+                org = [x_pos, posi_y]
+                for all_po_x in x:
+                    if all_po_x == org[0]:
+                        max_kill += 1
+                for all_po_y in posi_y:
+                    if all_po_y == org[1]:
+                        max_kill += 1
+            max_kill = max_kill - 1
+            if max_kill > max_ki:
+                max_ki = max_kill
+
+
+        elif posi_x[0] == posi_x[1]: #与y轴平行, x=5, x=6
+            max_kill = 0
+            for y_pos in posi_y:
+                org = [posi_x[0], y_pos]
+                for all_po_y in y:
+                    if all_po_y == org[1]:
+                        max_kill += 1
+                for all_po_x in posi_x:
+                    if all_po_x == org[0]:
+                        max_kill += 1
+            max_kill = max_kill - 1
+            if max_kill > max_ki:
+                max_ki = max_kill
+
+        else:
+            max_kill = 0
+            k1 = (posi_y[0] - posi_y[1]) / (posi_x[0] - posi_x[1])
+            k2 = -1/k1
+            for id in ind:
+                if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k1 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
+                    max_kill += 1
+                if (y[id] - posi_y[0]) / (x[id] - posi_x[0]) == k2 or (x[id] - posi_x[0] == 0 and y[id] - posi_y[0] == 0):
+                    max_kill += 1
+            max_kill += 1
+            if max_kill > max_ki:
+                max_ki = max_kill
+
+            max_kill = 0
+            for id in ind:
+                if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k1 or (x[id] - posi_x[1] == 0 and y[id] - posi_y[1]):
+                    max_kill += 1
+                if (y[id] - posi_y[1]) / (x[id] - posi_x[1]) == k2 or (x[id] - posi_x[1] == 0 and y[id] - posi_y[1]):
+                    max_kill += 1
+            max_kill += 1
+            if max_kill > max_ki:
+                max_ki = max_kill
+    print(ki)
+
+
+n = 5
+x = [0, -1, 1, 1, -1]
+y = [0, -1, -1, 1, 1]
+kill_more(n, x, y)
