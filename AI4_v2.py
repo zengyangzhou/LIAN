@@ -18,18 +18,13 @@ def get_std_variance(list):
     std_dev = (sum/(len(list)-1))**0.5
     return std_dev
 workbook = load_workbook('C:\\Users\\zengyangzhou\\Desktop\\工作\\AI4\\SharePrices.xlsx')
-#booksheet = workbook.active                #获取当前活跃的sheet,默认是第一个sheet
 sheets = workbook.get_sheet_names()  # 从名称获取sheet
 booksheet = workbook.get_sheet_by_name(sheets[0])
-
 rows = booksheet.rows
 columns = booksheet.columns
-# 迭代所有的行
-# print(rows)
 result = open('C:\\Users\\zengyangzhou\\Desktop\\工作\\AI4\\ass_4_v2.txt', 'w', encoding='utf-8')
 for row in rows:
     line = [col.value for col in row]
-
 #通过坐标读取值
 data1 = []
 data2 = []
@@ -159,10 +154,8 @@ for i in range(2, 501):
     r10.append(r)
 r10_stdev = get_std_variance(r1)
 
-
 stock_order = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 r_stdev = [0, r1_stdev, r2_stdev, r3_stdev, r4_stdev, r5_stdev, r6_stdev, r7_stdev, r8_stdev, r9_stdev, r10_stdev]
-
 stock_name = {1: 'HSBA', 2: 'BARC', 3: 'BA', 4: 'VOD', 5: 'BATS', 6: 'TSCO', 7: 'PRU', 8: 'AVIVA', 9: 'GSK', 10: 'BP'}
 risk_profit = {}
 f1 = plt.figure(1)
@@ -174,21 +167,16 @@ def gen_ran(C):
     ran_list = ran_list/(np.sum(ran_list))
     #print(ran_list)
     return ran_list
-
+max_ratio = 0
 for mont_ca in range(20):
-    for C in range(1, 11):    #选多少股票
-
+    for C in range(1, 11):    #选多少支股票
         #W = [0] * C    #初始化权重
         W = gen_ran(C)
-
         for comb in list(combinations(stock_order, C)):
             Profit = 0
             Risk = 0
-            result.write('\n')
-            result.write('when we chose stock(s) of \t', )
             ind1 = 0
-            for stock in comb:
-
+            for stock in comb:  #C = 3, 【1，2, 3】
                 Wei1 = W[ind1]
                 ind1 += 1
                 Profit = Profit + Wei1 * Return[stock]
@@ -198,21 +186,26 @@ for mont_ca in range(20):
                     ind2 += 1
                     Risk = Risk + Wei1 * Wei2 * np.cov(data[stock], data[stock2])[0][1]
 
-                #Risk = Risk + W * r_stdev[stock]
-                #print('W C 1/C', W, C, 1/C)
-                result.write(stock_name[stock])
-                result.write('\t')
-                result.write('W=')
-                result.write(str(Wei1))
-                result.write('\t')
             Risk = np.sqrt(Risk)
             plt.scatter(Risk, Profit, alpha=0.6)
-            result.write('The Return is \t')
-            result.write(str(Profit))
-            result.write('\t')
-            result.write(' and Risk is \t')
-            # print('when we chose k is ', k)
-            result.write(str(Risk))
-            result.write('\n')
-
+            sharpe_ratio = Profit / Risk
+            if sharpe_ratio > max_ratio:
+                max_ratio = sharpe_ratio
+                result.write('\n')
+                result.write('when we chose stock(s) of \t', )
+                for x, y in enumerate(comb):
+                    result.write(str(stock_name[y]))
+                    result.write('\t')
+                    result.write('W=')
+                    result.write(str(W[x]))
+                    result.write('\t')
+                result.write('The Return is \t')
+                result.write(str(Profit))
+                result.write('\t')
+                result.write(' and Risk is \t')
+                result.write(str(Risk))
+                result.write('\t')
+                result.write(' and Sharpe Ratio \t')
+                result.write(str(max_ratio))
+                result.write('\n')
 plt.show()
