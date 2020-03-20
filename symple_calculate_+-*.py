@@ -1,3 +1,6 @@
+#这个网站写得很详细   https://www.cnblogs.com/Meanwey/p/9741334.html
+
+
 import re
 pattern_num = re.compile(r'\d+')
 pattern_symb = re.compile(r'\D+')
