@@ -9,8 +9,8 @@ symb_lst = pattern_symb.findall(str)
 
 def symple_cal(eq): #计算普通加减乘除计算，不包括有括号情况
     import re
-    pattern_num = re.compile(r'\d+')
-    pattern_symb = re.compile(r'\D+')
+    pattern_num = re.compile(r'\d+\.?\d+|\d+')
+    pattern_symb = re.compile(r'[+*/-]')
 
     num_lst = list(map(float, pattern_num.findall(eq)))
     symb_lst = pattern_symb.findall(eq)
@@ -56,5 +56,9 @@ def symple_cal(eq): #计算普通加减乘除计算，不包括有括号情况
 
         print(num_lst)
 
-symple_cal('1+2*33-4/5*3+4/2')
-print(1+2*33-4/5*3+4/2)
+symple_cal('1+2*33.5-4/5*3+4/122')
+print(1+2*33.5-4/5*3+4/122)
+print(eval('1+(2*33.5-4/5*3)+4/122'))
+# a = '123+32.21-2333*0.6/2+23'
+# print(re.findall('\d+\.?\d+|\d+',a))    #\.  这个点就是字符为‘.’的意思，可以更改为其他字符
+# print(re.findall('[+*/-]',a))
