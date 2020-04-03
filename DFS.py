@@ -3,6 +3,7 @@ from collections import defaultdict
 dic = defaultdict(list)
 for g in graph:
     dic[g[0]].append(g[1])
+    dic[g[1]].append(g[0])
 #print(math.sqrt(25)==int(math.sqrt(25)))
 graph = dic
 #print(graph)
